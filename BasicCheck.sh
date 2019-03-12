@@ -30,11 +30,11 @@ if [[ -e $Path ]]; then
         if [[ "$compilation" = "PASS" && "$Mamory" = "PASS" && "$thread" = "PASS" ]];then
    		exit 0
         elif [[ "$compilation" = "PASS" && "$Memory" = "FAIL" && "$thread" = "PASS" ]];then
-       		exit 5
+       		exit 2
         elif [[ "$compilation" = "PASS" && "$Memory" = "PASS" && "$thread" = "FAIL" ]];then
-                exit 6
+                exit 1
         elif [[ "$compilation" = "PASS" && "$Memory" = "FAIL" && "$thread" = "FAIL" ]];then
-                exit 4
+                exit 3
         else
                 exit 7
 	fi

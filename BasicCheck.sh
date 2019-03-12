@@ -8,20 +8,20 @@ if [[ -e $Path ]]; then
 	cd $Path 
 	make > /dev/null
 	if [[ $? -gt 0 ]]; then
-		$compilation="FAIL"
+		compilation="FAIL"
 	else
 		valgrind --leak-check=full -v ./$Program 1> /dev/null 2> /dev/null 
 		if [[ $? -gt 0 ]]; then
-			$Memory="FAIL"
+			Memory="FAIL"
 			valgrind --tool=helgrind ./$Program 1> /dev/null 2> /dev/null
 			CHECK=$?
 		fi
 		if [[ $CHECK -gt 0 ]]; then 
-			$thrtead="FAIl"
+			thread="FAIl"
 		else
 			valgrind --tool=helgrind ./$Program 1> /dev/null 2> /dev/null
 			if [[ $? -gt 0 ]]; then
-				$thread="FAIL"
+				thread="FAIL"
 			fi
 		fi
 	fi

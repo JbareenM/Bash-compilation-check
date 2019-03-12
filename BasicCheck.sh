@@ -16,7 +16,7 @@ if [[ -e $Path ]]; then
 			valgrind --tool=helgrind ./$Program 1> /dev/null 2> /dev/null
 			CHECK=$?
 		fi
-		if [[ $CHECK -gt 0 ]];then 
+		if [[ $CHECK -gt 0 ]]; then 
 			thrtead="FAIl"
 		else
 			valgrind --tool=helgrind ./$Program 1> /dev/null 2> /dev/null
@@ -27,13 +27,13 @@ if [[ -e $Path ]]; then
 	fi
         echo "Compilation        Memory leaks            thread race"
         echo "   $compilation                $Memory                    $thread"
-        if [[ "$compilation" = "PASS" && "$Mamory" = "PASS" && "$thread" = "PASS" ]];then
+        if [[ "$compilation" = "PASS" && "$Mamory" = "PASS" && "$thread" = "PASS" ]]; then
    		exit 0
-        elif [[ "$compilation" = "PASS" && "$Memory" = "FAIL" && "$thread" = "PASS" ]];then
+        elif [[ "$compilation" = "PASS" && "$Memory" = "FAIL" && "$thread" = "PASS" ]]; then
        		exit 2
-        elif [[ "$compilation" = "PASS" && "$Memory" = "PASS" && "$thread" = "FAIL" ]];then
+        elif [[ "$compilation" = "PASS" && "$Memory" = "PASS" && "$thread" = "FAIL" ]]; then
                 exit 1
-        elif [[ "$compilation" = "PASS" && "$Memory" = "FAIL" && "$thread" = "FAIL" ]];then
+        elif [[ "$compilation" = "PASS" && "$Memory" = "FAIL" && "$thread" = "FAIL" ]]; then
                 exit 3
         else
                 exit 7

@@ -27,7 +27,7 @@ if [[ -e $Path ]]; then
 	fi
         echo "Compilation        Memory leaks            thread race"
         echo "   $compilation                $Memory                    $thread"
-        if [[ "$compilation" = "PASS" && "$Mamory" = "PASS" && "$thread" = "PASS" ]]; then
+        if [[ "$compilation" = "PASS" && "$Memory" = "PASS" && "$thread" = "PASS" ]]; then
    		exit 0
         elif [[ "$compilation" = "PASS" && "$Memory" = "FAIL" && "$thread" = "PASS" ]]; then
        		exit 2

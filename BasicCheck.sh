@@ -10,23 +10,23 @@ if [[ -e $Path ]]; then
 	if [[ $? -gt 0 ]]; then
 		compilation="FAIL"
 	else
-		valgrind --leak-check=full -v ./$Program > /dev/null 
+		valgrind --leak-check=full -v ./$Program 1> /dev/null 2> /dev/null 
 		if [[ $? -gt 0 ]]; then
 			Memory="FAIL"
-			valgrind --tool=helgrind ./$Program > /dev/null
+			valgrind --tool=helgrind ./$Program 1> /dev/null 2> /dev/null
 			CHECK=$?
 		fi
 		if [[ $CHECK -gt 0 ]];then 
 			thrtead="FAIl"
 		else
-			valgrind --tool=helgrind ./$Program > /dev/null
+			valgrind --tool=helgrind ./$Program 1> /dev/null 2> /dev/null
 			if [[ $? -gt 0 ]]; then
 				thread="FAIL"
 			fi
 		fi
 	fi
         echo "Compilation        Memory leaks            thread race"
-        echo "  $compilation           $Memory              $thread"
+        echo "   $compilation                $Memory                    $thread"
         if [[ "$compilation" = "PASS" && "$Mamory" = "PASS" && "$thread" = "PASS" ]];then
    		exit 0
         elif [[ "$compilation" = "PASS" && "$Memory" = "FAIL" && "$thread" = "PASS" ]];then

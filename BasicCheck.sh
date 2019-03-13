@@ -17,24 +17,12 @@ if [[ -e $Path ]]; then
 			CHECK=$?
 			if [[ $CHECK -gt 0 ]]; then 
 				thread="FAIl"
-			else
-				valgrind --tool=helgrind ./$Program 1> /dev/null 2> /dev/null
-				if [[ $? -gt 0 ]]; then
-				thread="FAIL"
-				fi
 			fi
 		else
-	  		valgrind --tool=helgrind ./$Program 1> /dev/null 2> /dev/null
-                        CHECK=$?
-                        if [[ $CHECK -gt 0 ]]; then
-                                thread="FAIl"
-                        else
-                                valgrind --tool=helgrind ./$Program 1> /dev/null 2> /dev/null
-                                if [[ $? -gt 0 ]]; then
-                                thread="FAIL"
-                                fi
-                        fi
-
+			valgrind --tool=helgrind ./$Program 1> /dev/null 2> /dev/null
+			if [[ $? -gt 0 ]]; then
+				thread="FAIL"
+			fi
 		fi
 	fi
         echo "Compilation        Memory leaks            thread race"

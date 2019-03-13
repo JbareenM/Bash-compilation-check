@@ -11,7 +11,7 @@ if [[ -e $Path ]]; then
 		compilation="FAIL"
 		exit 7
 	else
-		valgrind --leak-check=full -v ./$Program 1> /dev/null 2> /dev/null 
+		valgrind --leak-check=full ./$Program 1> /dev/null 2> /dev/null 
 		if [[ $? -gt 0 ]]; then
 			Memory="FAIL"
 			valgrind --tool=helgrind ./$Program 1> /dev/null 2> /dev/null

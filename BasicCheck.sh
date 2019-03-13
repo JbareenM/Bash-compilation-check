@@ -9,6 +9,7 @@ if [[ -e $Path ]]; then
 	make > /dev/null
 	if [[ $? -gt 0 ]]; then
 		compilation="FAIL"
+		exit 7
 	else
 		valgrind --leak-check=full -v ./$Program 1> /dev/null 2> /dev/null 
 		if [[ $? -gt 0 ]]; then

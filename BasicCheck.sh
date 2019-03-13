@@ -15,13 +15,13 @@ if [[ -e $Path ]]; then
 			Memory="FAIL"
 			valgrind --tool=helgrind ./$Program 1> /dev/null 2> /dev/null
 			CHECK=$?
-		fi
-		if [[ $CHECK -gt 0 ]]; then 
-			thread="FAIl"
-		else
-			valgrind --tool=helgrind ./$Program 1> /dev/null 2> /dev/null
-			if [[ $? -gt 0 ]]; then
+			if [[ $CHECK -gt 0 ]]; then 
+				thread="FAIl"
+			else
+				valgrind --tool=helgrind ./$Program 1> /dev/null 2> /dev/null
+				if [[ $? -gt 0 ]]; then
 				thread="FAIL"
+				fi
 			fi
 		fi
 	fi

@@ -16,7 +16,7 @@ if [[ -e $Path ]]; then
 			Memory="FAIL"
 			valgrind --tool=helgrind ./$Program 1> /dev/null 2> /dev/null
 			if [[ $? -gt 0 ]]; then 
-				thread="FAIl"
+				thread="FAIL"
 			fi
 		else
 			valgrind --tool=helgrind ./$Program 1> /dev/null 2> /dev/null

@@ -1,54 +1,32 @@
 #!/bin/bash
-
-CURRDIR=$1            #the given directory.
-PROGRAM=$2            #the given program.
-MEMCHECK=0
-THREADRACE=0
-COMPILATION=0
-
-cd $1
-
-make
-
-if [ $? != 0 ]; then       #if the compilation failed or there is no makefile. 
-COMPILATION=1
-MEMCHECK=1
-THREADRACE=1
-fi
-
-if [ $COMPILATION == 0 ]; then          #if the compilation succeed, checks for memory leaked.
-	valgrind --error-exitcode=1 --leak-check=full ./$PROGRAM
-
-	if [ $? != 0 ]; then MEMCHECK=1       #if there is a memory leaked.
-	fi
-
-	valgrind --error-exitcode=1 --tool=helgrind ./$PROGRAM       #run thread race test.
-
-	if [ $? != 0 ]; then THREADRACE=1     #if there is a thread race problem.
-	fi
-fi
-
-echo ""
-echo ""
-echo ""
-
-echo "COMPILATION       MEMORY LEAKS       THREAD RACE"
-echo "    $COMPILATION                  $MEMCHECK                  $THREADRACE"     
-
-
-if [ $COMPILATION -eq 1 ]; then exit 7
-fi
-
-if [ $COMPILATION -eq 0 ]; then 
-	if [ $MEMCHECK -eq 1 ]; then
-		if [ $THREADRACE -eq 1 ]; then exit 3
-		else exit 2
-		fi
+Path=$1
+Program=$2
+if [[ -e $Path ]]; then
+	cd $Path
+	make 1> /dev/null 2> /dev/null
+	if [[ $? -gt 0 ]]; then 
+		echo 7       
+		exit 7
 	else
-		if [ $THREADRACE -eq 1 ]; then exit 1
-		else exit 0
+		valgrind --error-exitcode=1 --leak-check=full ./$Program 1> /dev/null 2> /dev/null
+		if [[ $? -gt 0 ]]; then 
+			valgrind --error-exitcode=1 --tool=helgrind ./$Program 1> /dev/null 2> /dev/null
+			if [[ $? -gt 0 ]]; then
+				echo 3       
+				exit 3
+			else
+				echo 2       
+				exit 2
+			fi
+		else
+			valgrind --error-exitcode=1 --tool=helgrind ./$Program 1> /dev/null 2> /dev/null
+			if [[ $? -gt 0 ]]; then
+				echo 1	
+				exit 1
+			else 
+				echo 0
+				exit 0
+			fi
 		fi
 	fi
 fi
-
-
